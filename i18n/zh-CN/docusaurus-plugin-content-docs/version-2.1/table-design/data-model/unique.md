@@ -118,7 +118,7 @@ PROPERTIES (
 
 -   Unique 表的实现方式只能在建表时确定，无法通过 schema change 进行修改。
 
--   旧的 Merge-on-Read 的实现无法无缝升级到 Merge-on-Write 的实现（数据组织方式完全不同），如果需要改为使用写时合并的实现版本，需要手动执行 `insert into unique-mow-table select * from source table` 来重新导入。
+-   旧的 Merge-on-Read 的实现无法无缝升级到 Merge-on-Write 的实现（数据组织方式完全不同），如果需要改为使用写时合并的实现版本，需要手动执行 `insert into unique-now-table select * from source table` 来重新导入。
 
 -   整行更新：Unique 模型默认的更新语意为整行 `UPSERT`，即 UPDATE OR INSERT，该行数据的 key 如果存在，则进行更新，如果不存在，则进行新数据插入。在整行 `UPSERT` 语意下，即使用户使用 insert into 指定部分列进行写入，Doris 也会在 Planner 中将未提供的列使用 NULL 值或者默认值进行填充
 
